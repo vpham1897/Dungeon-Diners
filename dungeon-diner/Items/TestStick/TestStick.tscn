@@ -1,0 +1,45 @@
+[gd_scene load_steps=9 format=3 uid="uid://blii7w6c88qcq"]
+
+[ext_resource type="PackedScene" uid="uid://ct02p6c4lw1gn" path="res://Items/Melee/Melee.tscn" id="1_yul4g"]
+[ext_resource type="Texture2D" uid="uid://dyalhepph2imx" path="res://Items/TestStick/TestSwing1.png" id="2_lyh6d"]
+[ext_resource type="Texture2D" uid="uid://cun51s0w0oq63" path="res://Items/TestStick/TestSwing2.png" id="3_1wo05"]
+[ext_resource type="Texture2D" uid="uid://dvdrn3t5g1j4c" path="res://Items/TestStick/TestSwing3.png" id="4_750r8"]
+[ext_resource type="Texture2D" uid="uid://5sp6d1qys4br" path="res://Items/TestStick/TestSwing4.png" id="5_yoyi2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y7g7g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_lyh6d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_1wo05")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_750r8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_yoyi2")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_6e7pl"]
+resource_name = "Swing"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_civon"]
+_data = {
+"Swing": SubResource("Animation_6e7pl")
+}
+
+[node name="TestStick" instance=ExtResource("1_yul4g")]
+
+[node name="AnimatedSprite2D" parent="." index="0"]
+sprite_frames = SubResource("SpriteFrames_y7g7g")
+
+[node name="AnimationPlayer" parent="." index="2"]
+libraries = {
+"": SubResource("AnimationLibrary_civon")
+}

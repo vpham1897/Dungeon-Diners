@@ -4,6 +4,7 @@ class_name BaseItem
 
 var hurtbox
 var sprite
+var damage
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,8 +15,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+# Implement in extended classes
 func attack():
 	pass
 		
 func interact():
 	pass
+
+
+func finished_animation() -> void:
+	free()
+	pass # Replace with function body.
