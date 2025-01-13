@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://ct02p6c4lw1gn"]
+[gd_scene load_steps=2 format=3 uid="uid://cgnxeoqtakanc"]
 
 [ext_resource type="Script" path="res://Items/Melee/melee.gd" id="1_ko7qt"]
 
@@ -10,7 +10,5 @@ script = ExtResource("1_ko7qt")
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="HurtboxShape" type="CollisionPolygon2D" parent="Hurtbox"]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="finished_animation"]

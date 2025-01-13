@@ -1,8 +1,15 @@
 extends CharacterBody2D
+
+signal use_item(source : Node2D)
+
 var maxSPEED = 800
 var Acceleration = 300
 var Deceleration = 600
 var target = Vector2.ZERO
+
+func _ready():
+	pass
+
 func _physics_process(delta):
 	var direction = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 	
@@ -16,3 +23,9 @@ func _physics_process(delta):
 		$AnimatedSprite2D.play()
 	else:
 		$AnimatedSprite2D.stop()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		print("using item!")
+		InventoryManager.use_item(self)
+		# Call inventory manager's instantiate and give my stuffs

@@ -1,13 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://by83ge21vm32j"]
+[gd_scene load_steps=5 format=3 uid="uid://lu7w1wg5ogrw"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_5s6nd"]
-[ext_resource type="Texture2D" uid="uid://bkv3gvu6fa4rr" path="res://Pan_Blue_Circle.png" id="2_0mxro"]
+[ext_resource type="Script" path="res://Entities/Slime/player.gd" id="1_aiwky"]
+[ext_resource type="Texture2D" uid="uid://bkv3gvu6fa4rr" path="res://Entities/Slime/Pan_Blue_Circle.png" id="2_mla1c"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6tsad"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_0mxro")
+"texture": ExtResource("2_mla1c")
 }],
 "loop": true,
 "name": &"Placeholder Circle",
@@ -19,7 +19,7 @@ radius = 1257.14
 height = 2514.29
 
 [node name="Player" type="CharacterBody2D"]
-script = ExtResource("1_5s6nd")
+script = ExtResource("1_aiwky")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.13, 0.13)

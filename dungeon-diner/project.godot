@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Dungeon Diner"
-run/main_scene="res://player.tscn"
+run/main_scene="res://Entities/Slime/player.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+InventoryManager="*res://InventoryManager/InventoryManager.tscn"
 
 [input]
 

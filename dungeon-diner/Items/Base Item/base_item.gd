@@ -24,5 +24,5 @@ func interact():
 
 
 func finished_animation() -> void:
-	free()
+	queue_free()
 	pass # Replace with function body.
