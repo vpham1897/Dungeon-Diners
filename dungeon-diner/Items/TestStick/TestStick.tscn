@@ -30,10 +30,13 @@ animations = [{
 script = ExtResource("1_3cjqc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(94, -70)
 sprite_frames = SubResource("SpriteFrames_065f1")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="HurtboxShape" type="CollisionPolygon2D" parent="Hurtbox"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="finished_animation"]
