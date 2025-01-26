@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxdg027oqbhfe"
-path="res://.godot/imported/fantasy_dungeon_tileset.png-455e251a33ad9133d66e07769ee3edf7.ctex"
+uid="uid://dhjismnupsrn1"
+path="res://.godot/imported/AccelerationMap.jpg-e0bac5d9a5fc1d98749d1c5f5520b1fd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fantasy_dungeon_tileset.png"
-dest_files=["res://.godot/imported/fantasy_dungeon_tileset.png-455e251a33ad9133d66e07769ee3edf7.ctex"]
+source_file="res://Tileset/AccelerationMap.jpg"
+dest_files=["res://.godot/imported/AccelerationMap.jpg-e0bac5d9a5fc1d98749d1c5f5520b1fd.ctex"]
 
 [params]
 

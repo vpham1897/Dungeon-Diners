@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=4 uid="uid://72cg7tkkjwh4"]
+[gd_scene load_steps=9 format=4 uid="uid://bfdyrb6xra07h"]
 
-[ext_resource type="Texture2D" uid="uid://dxdg027oqbhfe" path="res://fantasy_dungeon_tileset.png" id="1_su1at"]
+[ext_resource type="Texture2D" uid="uid://dxdg027oqbhfe" path="res://Tileset/fantasy_dungeon_tileset.png" id="1_su1at"]
+[ext_resource type="Texture2D" uid="uid://dhjismnupsrn1" path="res://Tileset/AccelerationMap.jpg" id="2_oadtk"]
+[ext_resource type="Script" path="res://tile_map.gd" id="3_tf6cr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1hsyy"]
 texture = ExtResource("1_su1at")
@@ -229,17 +231,128 @@ texture_region_size = Vector2i(32, 32)
 7:13/0 = 0
 7:14/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ue8m7"]
+texture = ExtResource("2_oadtk")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = -1
+0:0/0/custom_data_1 = 1
+1:0/0 = 0
+1:0/0/custom_data_0 = -1
+1:0/0/custom_data_1 = 2
+2:0/0 = 0
+2:0/0/custom_data_0 = -1
+2:0/0/custom_data_1 = 3
+0:1/0 = 0
+0:1/0/custom_data_0 = -1
+0:1/0/custom_data_1 = -1
+1:1/0 = 0
+1:1/0/custom_data_0 = -2
+1:1/0/custom_data_1 = -2
+2:1/0 = 0
+2:1/0/custom_data_0 = -3
+2:1/0/custom_data_1 = -3
+0:2/0 = 0
+0:2/0/custom_data_0 = 1
+0:2/0/custom_data_1 = 1
+1:2/0 = 0
+1:2/0/custom_data_0 = 2
+1:2/0/custom_data_1 = 2
+2:2/0 = 0
+2:2/0/custom_data_0 = 3
+2:2/0/custom_data_1 = 3
+
 [sub_resource type="TileSet" id="TileSet_4blck"]
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+custom_data_layer_0/name = "Acceleration"
+custom_data_layer_0/type = 2
+custom_data_layer_1/name = "Deceleration"
+custom_data_layer_1/type = 2
 sources/1 = SubResource("TileSetAtlasSource_1hsyy")
+sources/2 = SubResource("TileSetAtlasSource_ue8m7")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b0gym"]
+texture = ExtResource("2_oadtk")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/custom_data_0 = "1A"
+0:0/0/custom_data_1 = "1A"
+1:0/0 = 0
+1:0/0/custom_data_0 = "2A"
+1:0/0/custom_data_1 = "2A"
+2:0/0 = 0
+2:0/0/custom_data_0 = "3A"
+2:0/0/custom_data_1 = "3A"
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+0:1/0/custom_data_0 = "1B"
+0:1/0/custom_data_1 = "1B"
+1:1/0 = 0
+1:1/0/custom_data_0 = "2B"
+1:1/0/custom_data_1 = "2B"
+2:1/0 = 0
+2:1/0/custom_data_0 = "3B"
+2:1/0/custom_data_1 = "3B"
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+0:2/0 = 0
+0:2/0/custom_data_0 = "1C"
+0:2/0/custom_data_1 = "1C"
+1:2/0 = 0
+1:2/0/custom_data_0 = "2C"
+1:2/0/custom_data_1 = "2C"
+2:2/0 = 0
+2:2/0/custom_data_0 = "3C"
+2:2/0/custom_data_1 = "3C"
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jq1p0"]
+tile_size = Vector2i(32, 32)
+custom_data_layer_0/name = "Acceleration"
+custom_data_layer_0/type = 4
+custom_data_layer_1/name = "Decceleration"
+custom_data_layer_1/type = 4
+sources/0 = SubResource("TileSetAtlasSource_b0gym")
 
 [node name="Node2D" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [32.0]
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="Tileset" type="Node2D" parent="."]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="Tileset"]
 tile_map_data = PackedByteArray("AAAHAAEAAQADAAIAAAAGAAEAAQABAAIAAAAFAAAAAQACAAAAAAAEAAAAAQACAAAAAAADAAAAAQACAAAAAAACAAAAAQAMAAEAAAAKAAEAAQAGAAEAAAAKAAAAAQAHAAAAAAAJAAAAAQAJAAIAAAAIAAAAAQAKAAEAAAAHAAAAAQACAAAAAAAGAAAAAQACAAAAAAAFAAEAAQACAAMAAAAEAAEAAQACAAMAAAADAAEAAQACAAMAAAACAAEAAQABAAMAAAADAAMAAQALAAIAAAADAAIAAQALAAEAAAAGAAMAAQABAAMAAAAGAAIAAQAEAAEAAAAKAAMAAQAGAAIAAAAKAAIAAQALAAEAAAAIAAEAAQADAAMAAAAHAAIAAQAAAAEAAAAHAAMAAQADAAMAAAALAAMAAQAJAAIAAAAMAAMAAQAKAAIAAAAMAAEAAQAJAAIAAAALAAEAAQAJAAIAAAACAP//AQALAAAAAAABAAAAAQAIAAIAAAALAAQAAQACAAQAAAAKAAQAAQABAAQAAAAMAAQAAQADAAQAAAAOAAEAAQAHAAAAAAANAAEAAQAJAAIAAAAOAAMAAQALAAIAAAAOAAIAAQALAAEAAAAOAAQAAQAEAAQAAAARAAIAAQAFAAwAAAASAAIAAQAFAAwAAAATAAIAAQAFAAwAAAAUAAIAAQAFAAwAAAAVAAIAAQAFAAwAAAAWAAIAAQAFAAwAAAARAAMAAQAFAAwAAAASAAMAAQAFAAwAAAATAAMAAQAFAAwAAAAUAAMAAQAFAAwAAAAVAAMAAQAFAAwAAAAWAAMAAQAFAAwAAAARAAEAAQACAAQAAAASAAEAAQACAAQAAAATAAEAAQACAAQAAAAUAAEAAQACAAQAAAAVAAEAAQACAAQAAAAWAAEAAQACAAQAAAARAAAAAQACAAMAAAASAAAAAQACAAMAAAATAAAAAQACAAMAAAAUAAAAAQACAAMAAAAVAAAAAQACAAMAAAAWAAAAAQACAAMAAAARAAQAAQACAAQAAAASAAQAAQACAAQAAAATAAQAAQACAAQAAAAUAAQAAQACAAQAAAAVAAQAAQACAAQAAAAWAAQAAQACAAQAAAARAAUAAQACAAIAAAASAAUAAQACAAIAAAATAAUAAQACAAIAAAAUAAUAAQACAAIAAAAVAAUAAQACAAIAAAAWAAUAAQACAAIAAAAYAAAAAQACAAMAAAAZAAAAAQACAAMAAAAaAAAAAQACAAMAAAAbAAAAAQACAAMAAAAcAAAAAQACAAMAAAAdAAAAAQACAAMAAAAYAAEAAQACAAQAAAAZAAEAAQACAAQAAAAaAAEAAQACAAQAAAAbAAEAAQACAAQAAAAcAAEAAQACAAQAAAAdAAEAAQACAAQAAAAYAAIAAQAFAAwAAAAZAAIAAQAFAAwAAAAaAAIAAQAFAAwAAAAbAAIAAQAFAAwAAAAcAAIAAQAFAAwAAAAdAAIAAQAFAAwAAAAdAAMAAQAFAAwAAAAcAAMAAQAFAAwAAAAbAAMAAQAFAAwAAAAaAAMAAQAFAAwAAAAZAAMAAQAFAAwAAAAYAAMAAQAFAAwAAAAYAAQAAQACAAAAAAAZAAQAAQACAAAAAAAaAAQAAQACAAAAAAAbAAQAAQACAAAAAAAcAAQAAQACAAAAAAAdAAQAAQACAAAAAAA=")
 tile_set = SubResource("TileSet_4blck")
+
+[node name="TileMap" type="TileMap" parent="Tileset"]
+tile_set = SubResource("TileSet_jq1p0")
+rendering_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(131089, 0, 0, 131090, 0, 0, 131091, 0, 0, 196626, 65536, 0, 196627, 65536, 0, 196628, 65536, 0, 131092, 0, 0, 131093, 0, 0, 131094, 0, 0, 196625, 65536, 0, 196629, 65536, 0, 196630, 65536, 0, 262161, 131072, 0, 262162, 131072, 0, 262163, 131072, 0, 262164, 131072, 0, 262165, 131072, 0, 262166, 131072, 0, 131096, 0, 1, 131097, 0, 1, 131098, 0, 1, 131099, 0, 1, 131100, 0, 1, 196632, 65536, 1, 196633, 65536, 1, 196634, 65536, 1, 196635, 65536, 1, 196636, 65536, 1, 262168, 131072, 1, 262169, 131072, 1, 262170, 131072, 1, 262171, 131072, 1, 262172, 131072, 1, 131102, 0, 2, 196638, 65536, 2, 262174, 131072, 2)
+script = ExtResource("3_tf6cr")
