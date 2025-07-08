@@ -8,7 +8,7 @@ var Deceleration = 600
 var target = Vector2.ZERO
 var cooldown = 0
 # what attack cooldown resets.
-var maxCooldown = 3
+var maxCooldown = 1
 
 func _ready():
 	pass
@@ -23,6 +23,9 @@ func _physics_process(delta):
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Deceleration * delta)
 	move_and_slide()
+	
+	if cooldown <= 0:
+		look_at(get_global_mouse_position())
 	
 	if velocity.length() > 0:
 		$AnimatedSprite2D.play()

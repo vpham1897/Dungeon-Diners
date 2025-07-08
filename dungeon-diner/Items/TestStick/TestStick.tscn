@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1aw8xuscqqgn"]
+[gd_scene load_steps=10 format=3 uid="uid://d1aw8xuscqqgn"]
 
 [ext_resource type="Script" path="res://Items/Melee/melee.gd" id="1_3cjqc"]
 [ext_resource type="Texture2D" uid="uid://dyalhepph2imx" path="res://Items/TestStick/TestSwing1.png" id="2_lyh6d"]
@@ -26,17 +26,71 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_mo6bd"]
+resource_name = "Swing"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hurtbox/HurtboxShape:polygon")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.25, 0.3, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(), PackedVector2Array(1, 0, 180, -24, 159, -89), PackedVector2Array(-1, 0, 161, -90, 180, -26, 178, 36), PackedVector2Array(-1, 1, 160, -88, 180, -26, 179, 34, 164, 86), PackedVector2Array(159, -86, 181, -30, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wndkd"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hurtbox/HurtboxShape:polygon")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array()]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7wsst"]
+_data = {
+"RESET": SubResource("Animation_wndkd"),
+"Swing": SubResource("Animation_mo6bd")
+}
+
 [node name="TestStick" type="Node2D"]
 script = ExtResource("1_3cjqc")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(94, -70)
+position = Vector2(119, -16)
+rotation = 0.523599
 sprite_frames = SubResource("SpriteFrames_065f1")
 
 [node name="Hurtbox" type="Area2D" parent="."]
 
 [node name="HurtboxShape" type="CollisionPolygon2D" parent="Hurtbox"]
+disabled = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7wsst")
+}
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="finished_animation"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="finished_animation"]

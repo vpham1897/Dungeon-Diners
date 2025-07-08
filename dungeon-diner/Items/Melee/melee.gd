@@ -16,10 +16,10 @@ func _process(delta: float) -> void:
 
 func attack():
 	print("attack!")
-	sprite.play()
+	sprite.play("Swing")
 	pass
 
-func finished_animation():
+func finished_animation(anim_name: StringName):
 	print("bye bye")
-	super()
+	super(anim_name)
 	pass
