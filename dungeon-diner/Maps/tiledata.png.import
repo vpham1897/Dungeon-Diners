@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxdg027oqbhfe"
-path="res://.godot/imported/fantasy_dungeon_tileset.png-455e251a33ad9133d66e07769ee3edf7.ctex"
+uid="uid://qfxfguoaipr2"
+path="res://.godot/imported/tiledata.png-9e681b8cf9a87287c210430070553b53.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://fantasy_dungeon_tileset.png"
-dest_files=["res://.godot/imported/fantasy_dungeon_tileset.png-455e251a33ad9133d66e07769ee3edf7.ctex"]
+source_file="res://Maps/tiledata.png"
+dest_files=["res://.godot/imported/tiledata.png-9e681b8cf9a87287c210430070553b53.ctex"]
 
 [params]
 
