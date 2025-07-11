@@ -25,7 +25,9 @@ var max_item_cooldown = 1
 @export var data_tile_map: TileMapLayer
 var currentTitleData
 var tile_data
-
+func _ready() -> void:
+	$AnimatedSprite2D.play("Right")
+	$AnimatedSprite2D.stop()
 func _physics_process(delta):
 
 #region movement
