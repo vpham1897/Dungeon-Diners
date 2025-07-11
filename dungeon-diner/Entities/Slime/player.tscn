@@ -15,7 +15,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmsbu"]
-radius = 914.286
+radius = 914.285
 height = 1828.57
 
 [node name="Player" type="CharacterBody2D"]

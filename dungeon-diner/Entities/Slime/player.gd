@@ -3,8 +3,8 @@ extends CharacterBody2D
 signal use_item(source : Node2D)
 
 var maxSPEED = 800
-var Acceleration = 300
-var Deceleration = 600
+var BaseAcceleration = 300
+var BaseDeceleration = 600
 var target = Vector2.ZERO
 var cooldown = 0
 # what attack cooldown resets.
@@ -15,7 +15,11 @@ var maxCooldown = 1
 
 var currentTitleData
 var tile_data
-func _ready():
+
+func _physics_process(delta):
+
+#region movement
+#get tile data
 	if data_tile_map!= null: #does FloorData exist
 		tile_data = data_tile_map.get_tile_info_at(global_position)
 		if tile_data != null: #if there is a data at that tile
@@ -28,34 +32,21 @@ func _ready():
 	else:
 		push_error("TileMap reference is missing!")
 
-func _physics_process(delta):
-
-#region movement
-
-
-#get tile data
-	tile_data = data_tile_map.get_tile_info_at(global_position)
-	if tile_data != null: #if there is a data at that tile
-		#get the string thats in the tileCondition so Sticky ect
-		currentTitleData = tile_data.get_custom_data("TileCondition") 
-		print("TileCondition: ", currentTitleData)
-	else:
-		print("No tile under player, setting to Crisp")
-		currentTitleData = "Crisp"
-
+	var Acceleration = BaseAcceleration
+	var Deceleration = BaseDeceleration
 
 #Balance speed values
-	var High = 500
-	var Low = 100
+	var High = 2
+	var Low = 0.5
 	if currentTitleData == "Crisp":
-		Acceleration = High
-		Deceleration = High
+		Acceleration *= High
+		Deceleration *= High
 	if currentTitleData == "Slippery":
-		Acceleration = Low
-		Deceleration = Low
+		Acceleration *= Low
+		Deceleration *= Low
 	if currentTitleData == "Sticky" :
-		Acceleration = Low
-		Deceleration = High
+		Acceleration *= Low
+		Deceleration *= High
 
 
 #Input movement commands
