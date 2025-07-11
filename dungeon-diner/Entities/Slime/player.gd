@@ -89,11 +89,20 @@ func _physics_process(delta):
 		velocity = velocity.move_toward(Vector2.ZERO, deceleration * delta)
 
 	move_and_slide()
+	
 
-	if velocity.length() > 0:
-		$AnimatedSprite2D.play()
+#endregion
+#region Animation
+	if velocity.y < 0:# if the player is moving up. inverted cuz up is negative coordinate system
+		$AnimatedSprite2D.play("Up")
 	else:
-		$AnimatedSprite2D.stop()
+		if velocity.x >= 0: #if the player is moving to the right
+			$AnimatedSprite2D.play("Right")
+		if velocity.x < 0:
+			$AnimatedSprite2D.flip_h
+			$AnimatedSprite2D.play("Right")
+		else:
+			$AnimatedSprite2D.stop()
 #endregion
 
 	if item_cooldown <= 0 && dash_cooldown <= 0:
