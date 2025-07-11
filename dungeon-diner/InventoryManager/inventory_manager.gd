@@ -8,7 +8,7 @@ var inventory : Array[Resource]
 func _ready() -> void:
 	#follow the below format to add things to the inventory	
 	# This is for testing purposes. Ideally, this will be added 
-	add_inventory(preload("res://Items/TestStick/TestStick.tscn"))
+	add_inventory(preload("res://Items/Base Item/Melee/TestStick/TestStick.tscn"))
 	add_inventory(null)
 	selectedIndex = 0
 	pass # Replace with function body.
