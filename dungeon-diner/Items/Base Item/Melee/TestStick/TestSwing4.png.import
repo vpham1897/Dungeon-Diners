@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cun51s0w0oq63"
-path="res://.godot/imported/TestSwing2.png-845c961841314644d71c037632188efd.ctex"
+uid="uid://5sp6d1qys4br"
+path="res://.godot/imported/TestSwing4.png-7fd923f85cfa26c9cf89ff45102c2473.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Items/TestStick/TestSwing2.png"
-dest_files=["res://.godot/imported/TestSwing2.png-845c961841314644d71c037632188efd.ctex"]
+source_file="res://Items/Base Item/Melee/TestStick/TestSwing4.png"
+dest_files=["res://.godot/imported/TestSwing4.png-7fd923f85cfa26c9cf89ff45102c2473.ctex"]
 
 [params]
 

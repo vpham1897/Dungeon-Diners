@@ -15,11 +15,12 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fmsbu"]
-radius = 457.143
-height = 914.286
+radius = 914.285
+height = 1828.57
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_aiwky")
+dash_strength = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
