@@ -82,6 +82,7 @@ script = ExtResource("1_3cjqc")
 position = Vector2(119, -16)
 rotation = 0.523599
 sprite_frames = SubResource("SpriteFrames_065f1")
+frame = 3
 
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_mask = 2

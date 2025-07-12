@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal use_item(source : Node2D)
+#region Variables
 
 var BaseMaxSPEED = 800
 var BaseAcceleration = 500
@@ -25,9 +26,10 @@ var max_item_cooldown = 1
 @export var data_tile_map: TileMapLayer
 var currentTitleData
 var tile_data
+#endregion
 func _ready() -> void:
 	$AnimatedSprite2D.play("Right")
-	$AnimatedSprite2D.stop()
+	#$AnimatedSprite2D.stop("Right")
 func _physics_process(delta):
 
 #region movement
@@ -98,17 +100,22 @@ func _physics_process(delta):
 	if velocity.y < 0:# if the player is moving up. inverted cuz up is negative coordinate system
 		$AnimatedSprite2D.play("Up")
 	else:
-		if velocity.x >= 0: #if the player is moving to the right
+		if velocity.x > 0: #if the player is moving to the right
+			$AnimatedSprite2D.set_flip_h(false)
 			$AnimatedSprite2D.play("Right")
 		if velocity.x < 0:
-			$AnimatedSprite2D.flip_h
+			$AnimatedSprite2D.set_flip_h(true)
 			$AnimatedSprite2D.play("Right")
-		else:
-			$AnimatedSprite2D.stop()
+		if velocity.x == 0:
+			$AnimatedSprite2D.play("Right")
+			$AnimatedSprite2D.pause()
+			
+			
 #endregion
 
 	if item_cooldown <= 0 && dash_cooldown <= 0:
-		look_at(get_global_mouse_position())
+		pass
+		#look_at(get_global_mouse_position())
 	else:
 		item_cooldown = max(item_cooldown - delta, 0)
 		dash_cooldown = max(dash_cooldown - delta, 0)

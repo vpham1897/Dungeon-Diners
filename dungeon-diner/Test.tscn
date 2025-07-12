@@ -276,5 +276,5 @@ tile_set = SubResource("TileSet_2w4bl")
 script = ExtResource("2_s3hk7")
 
 [node name="Player" parent="." node_paths=PackedStringArray("data_tile_map") instance=ExtResource("4_b1qtm")]
-position = Vector2(576, 256)
+position = Vector2(816, 96)
 data_tile_map = NodePath("../FloorData")
