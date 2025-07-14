@@ -28,6 +28,7 @@ var currentTitleData
 var tile_data
 
 @export var Anim: AnimationPlayer
+var flip
 
 #endregion
 func _ready() -> void:
@@ -104,20 +105,37 @@ func _physics_process(delta):
 		Anim.play()
 	else:
 		if velocity.y < 0:# if the player is moving up. inverted cuz up is negative coordinate system
-			Anim.set_assigned_animation("back") 
+			Anim.queue("back")
+			
 			Anim.play()
 		else:
 			if velocity.x > 0: #if the player is moving to the right
-				$".".scale.x = 1
-				Anim.set_assigned_animation("walking") 
-				Anim.play()
-			if velocity.x < 0:
-				$".".scale.x = -1
-				Anim.set_assigned_animation("walking") 
-				Anim.play()
+				
+				var current_flip = get_parent().scale.x
+				if flip != current_flip:
+					current_flip = get_parent().scale.x
+					$".".scale.x = 1
+					flip = current_flip
+					print("flipping")
+				else:
+					$".".scale.x = 1
+				Anim.queue("walking")
+				
+			if velocity.x < 0: #left
+				var current_flip = get_parent().scale.x
+				if flip != current_flip:
+					$".".scale.x = -1
+					current_flip = get_parent().scale.x
+					flip = current_flip
+					print("flipping")
+				else:
+					$".".scale.x = 1
+				Anim.queue("walking")
+
 			if velocity.x == 0:
 				Anim.set_assigned_animation("walking") 
 				Anim.play()
+				print("down")
 	#endregion
 
 	if item_cooldown <= 0 && dash_cooldown <= 0:
