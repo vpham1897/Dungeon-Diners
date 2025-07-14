@@ -26,10 +26,12 @@ var max_item_cooldown = 1
 @export var data_tile_map: TileMapLayer
 var currentTitleData
 var tile_data
+
+@export var Anim: AnimationPlayer
+
 #endregion
 func _ready() -> void:
-	$AnimatedSprite2D.play("Right")
-	#$AnimatedSprite2D.stop("Right")
+	Anim.set_assigned_animation("idle") 
 func _physics_process(delta):
 
 #region movement
@@ -97,21 +99,26 @@ func _physics_process(delta):
 
 #endregion
 #region Animation
-	if velocity.y < 0:# if the player is moving up. inverted cuz up is negative coordinate system
-		$AnimatedSprite2D.play("Up")
+	if velocity.x == 0 and velocity.y == 0:
+		Anim.set_assigned_animation("idle") 
+		Anim.play()
 	else:
-		if velocity.x > 0: #if the player is moving to the right
-			$AnimatedSprite2D.set_flip_h(false)
-			$AnimatedSprite2D.play("Right")
-		if velocity.x < 0:
-			$AnimatedSprite2D.set_flip_h(true)
-			$AnimatedSprite2D.play("Right")
-		if velocity.x == 0:
-			$AnimatedSprite2D.play("Right")
-			$AnimatedSprite2D.pause()
-			
-			
-#endregion
+		if velocity.y < 0:# if the player is moving up. inverted cuz up is negative coordinate system
+			Anim.set_assigned_animation("back") 
+			Anim.play()
+		else:
+			if velocity.x > 0: #if the player is moving to the right
+				$".".scale.x = 1
+				Anim.set_assigned_animation("walking") 
+				Anim.play()
+			if velocity.x < 0:
+				$".".scale.x = -1
+				Anim.set_assigned_animation("walking") 
+				Anim.play()
+			if velocity.x == 0:
+				Anim.set_assigned_animation("walking") 
+				Anim.play()
+	#endregion
 
 	if item_cooldown <= 0 && dash_cooldown <= 0:
 		pass
@@ -134,5 +141,3 @@ func _input(event: InputEvent) -> void:
 		else:
 			print("item on cooldown! ", item_cooldown)
 		# Call inventory manager's instantiate and give my stuffs
-
-		
