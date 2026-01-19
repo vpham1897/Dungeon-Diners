@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3 uid="uid://drwelirrca64o"]
+
+[ext_resource type="Script" uid="uid://cf1dlj2ea6o4p" path="res://Entities/Enemy/Enemy 1/enemy_1.gd" id="1_d4t7x"]
+[ext_resource type="Texture2D" uid="uid://fubrdqyomn10" path="res://Entities/Enemy/Enemy 1/32x32 skeleton.png" id="2_a7f2v"]
+[ext_resource type="Script" uid="uid://bws1c61cbl72h" path="res://Entities/Enemy/Enemy 1/hurtbox.gd" id="2_d4t7x"]
+[ext_resource type="Script" uid="uid://dif7xlnoo75n3" path="res://Entities/health.gd" id="3_a7f2v"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cjnfy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_a7f2v")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvoyd"]
+size = Vector2(32, 32)
+
+[node name="Entity 1" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("1_d4t7x")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cjnfy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_pvoyd")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("2_d4t7x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_pvoyd")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("3_a7f2v")

@@ -1,17 +1,89 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgnxeoqtakanc"]
+[gd_scene load_steps=11 format=3 uid="uid://cgnxeoqtakanc"]
 
-[ext_resource type="Script" path="res://Items/Base Item/Melee/melee.gd" id="1_ko7qt"]
+[ext_resource type="Script" uid="uid://bpyogravruqbq" path="res://Items/Base Item/Melee/melee.gd" id="1_ko7qt"]
+[ext_resource type="Script" uid="uid://lhpbxiowhye6" path="res://Items/Base Item/Melee/hitbox.gd" id="2_a0mo4"]
+[ext_resource type="Texture2D" uid="uid://dyalhepph2imx" path="res://Items/Base Item/Melee/TestSwing1.png" id="2_dfn0e"]
+[ext_resource type="Texture2D" uid="uid://cun51s0w0oq63" path="res://Items/Base Item/Melee/TestSwing2.png" id="3_tnb4q"]
+[ext_resource type="Texture2D" uid="uid://dvdrn3t5g1j4c" path="res://Items/Base Item/Melee/TestSwing3.png" id="4_qw5xi"]
+[ext_resource type="Texture2D" uid="uid://5sp6d1qys4br" path="res://Items/Base Item/Melee/TestSwing4.png" id="5_4mcr2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3w3bw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_dfn0e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tnb4q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qw5xi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_4mcr2")
+}],
+"loop": true,
+"name": &"swing",
+"speed": 4.0
+}]
+
+[sub_resource type="Animation" id="Animation_akh04"]
+length = 0.001
+
+[sub_resource type="Animation" id="Animation_dpntt"]
+resource_name = "Swing"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Hitbox/Hitbox Shape:polygon")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(95, -154, -1, -1, 96, -154), PackedVector2Array(95, -154, -1, -1, 162, -75), PackedVector2Array(95, -154, -1, -1, 182, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.23333333, 0.46666667, 0.73333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mdodd"]
+_data = {
+&"RESET": SubResource("Animation_akh04"),
+&"Swing": SubResource("Animation_dpntt")
+}
 
 [node name="Melee" type="Node2D"]
 script = ExtResource("1_ko7qt")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(95, -73)
+sprite_frames = SubResource("SpriteFrames_3w3bw")
+animation = &"swing"
+frame = 3
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
 collision_mask = 2
+script = ExtResource("2_a0mo4")
 
-[node name="HurtboxShape" type="CollisionPolygon2D" parent="Hurtbox"]
+[node name="Hitbox Shape" type="CollisionPolygon2D" parent="Hitbox"]
+polygon = PackedVector2Array(95, -154, -1, -1, 182, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mdodd")
+}
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="finished_animation"]

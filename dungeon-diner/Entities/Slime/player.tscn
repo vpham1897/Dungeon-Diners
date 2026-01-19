@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://lu7w1wg5ogrw"]
+[gd_scene load_steps=9 format=3 uid="uid://lu7w1wg5ogrw"]
 
-[ext_resource type="Script" path="res://Entities/Slime/player.gd" id="1_aiwky"]
+[ext_resource type="Script" uid="uid://bjuty1rrisn4o" path="res://Entities/Slime/player.gd" id="1_aiwky"]
+[ext_resource type="PackedScene" uid="uid://cgnxeoqtakanc" path="res://Items/Base Item/Melee/Melee.tscn" id="2_h0xi8"]
+[ext_resource type="Script" uid="uid://bws1c61cbl72h" path="res://Entities/Enemy/Enemy 1/hurtbox.gd" id="2_iyw8t"]
 [ext_resource type="Texture2D" uid="uid://bkv3gvu6fa4rr" path="res://Entities/Slime/Pan_Blue_Circle.png" id="2_mla1c"]
+[ext_resource type="Script" uid="uid://dif7xlnoo75n3" path="res://Entities/health.gd" id="3_iyw8t"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6tsad"]
 animations = [{
@@ -18,8 +21,13 @@ animations = [{
 radius = 457.143
 height = 914.286
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_iyw8t"]
+radius = 16.0
+
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 10
 script = ExtResource("1_aiwky")
+meleeScene = ExtResource("2_h0xi8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.90735e-06, 1.90735e-06)
@@ -31,3 +39,14 @@ frame_progress = 0.736272
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.035, 0.035)
 shape = SubResource("CapsuleShape2D_fmsbu")
+
+[node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_iyw8t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_iyw8t")
+
+[node name="Health" type="Node2D" parent="."]
+script = ExtResource("3_iyw8t")

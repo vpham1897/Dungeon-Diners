@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://72cg7tkkjwh4"]
+[gd_scene load_steps=10 format=4 uid="uid://72cg7tkkjwh4"]
 
 [ext_resource type="Texture2D" uid="uid://dgdox28x4xar2" path="res://Maps/fantasy_dungeon_tileset.png" id="1_su1at"]
-[ext_resource type="Script" path="res://Maps/FloorData.gd" id="2_s3hk7"]
+[ext_resource type="Script" uid="uid://bsabmg7agux5w" path="res://Maps/FloorData.gd" id="2_s3hk7"]
 [ext_resource type="Texture2D" uid="uid://qfxfguoaipr2" path="res://Maps/tiledata.png" id="2_uoa68"]
 [ext_resource type="PackedScene" uid="uid://lu7w1wg5ogrw" path="res://Entities/Slime/player.tscn" id="4_b1qtm"]
+[ext_resource type="PackedScene" uid="uid://drwelirrca64o" path="res://Entities/Enemy/Enemy 1/Enemy 1.tscn" id="5_aq4fw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1hsyy"]
 texture = ExtResource("1_su1at")
@@ -234,7 +235,8 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSet" id="TileSet_4blck"]
 tile_size = Vector2i(32, 32)
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 8
+physics_layer_0/collision_mask = 3
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
@@ -278,3 +280,4 @@ script = ExtResource("2_s3hk7")
 [node name="Player" parent="." node_paths=PackedStringArray("data_tile_map") instance=ExtResource("4_b1qtm")]
 position = Vector2(816, 96)
 data_tile_map = NodePath("../FloorData")
+enemyScene = ExtResource("5_aq4fw")
