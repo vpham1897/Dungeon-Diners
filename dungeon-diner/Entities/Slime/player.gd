@@ -5,6 +5,9 @@ signal use_item(source : Node2D)
 var BaseMaxSPEED = 800
 var BaseAcceleration = 500
 var BaseDeceleration = 500
+var acceleration = BaseAcceleration
+var deceleration = BaseDeceleration
+var maxSPEED = BaseMaxSPEED
 var cooldown = 0
 # what attack cooldown resets.
 var maxCooldown = 1
@@ -27,41 +30,14 @@ var currentTitleData
 var tile_data
 
 func _physics_process(delta):
+#Most of the physics occurs here
 
-#region movement
-#get tile data
-	if data_tile_map!= null: #does FloorData exist
-		tile_data = data_tile_map.get_tile_info_at(global_position)
-		if tile_data != null: #if there is a data at that tile
-			#get the string thats in the tileCondition so Sticky ect
-			currentTitleData = tile_data.get_custom_data("TileCondition") 
-			#print("TileCondition: ", currentTitleData)
-		else:
-			#print("No tile under player, setting to Crisp")
-			currentTitleData = "Crisp"
-	else:
-		push_error("TileMap reference is missing!")
-
-	var acceleration = BaseAcceleration
-	var deceleration = BaseDeceleration
-	var maxSPEED = BaseMaxSPEED
-
-#Balance speed values
-	var High = 2
-	var Low = 0.5
-	if currentTitleData == "Crisp":
-		acceleration *= High
-		deceleration *= High
-	if currentTitleData == "Slippery":
-		acceleration *= Low
-		deceleration *= Low
-		maxSPEED *= High
-	if currentTitleData == "Sticky" :
-		acceleration *= Low
-		deceleration *= High
-		maxSPEED *= Low
-
-	# Make transitions 
+	acceleration = BaseAcceleration
+	deceleration = BaseDeceleration
+	maxSPEED = BaseMaxSPEED
+	
+	terrainModdedSpeeds()
+		
 	cap_speed(maxSPEED)
 
 	var direction = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
@@ -101,6 +77,34 @@ func _physics_process(delta):
 	else:
 		item_cooldown = max(item_cooldown - delta, 0)
 		dash_cooldown = max(dash_cooldown - delta, 0)
+
+func terrainModdedSpeeds():
+	if data_tile_map!= null: #does FloorData exist
+		tile_data = data_tile_map.get_tile_info_at(global_position)
+		if tile_data != null: #if there is data at that tile
+			#get the string thats in the tileCondition so Sticky ect
+			currentTitleData = tile_data.get_custom_data("TileCondition") 
+			#print("TileCondition: ", currentTitleData)
+		else:
+			#print("No tile under player, setting to Crisp")
+			currentTitleData = "Crisp"
+	else:
+		push_error("TileMap reference is missing!")
+
+#Balance speed values
+	var High = 2
+	var Low = 0.5
+	if currentTitleData == "Crisp":
+		acceleration *= High
+		deceleration *= High
+	if currentTitleData == "Slippery":
+		acceleration *= Low
+		deceleration *= Low
+		maxSPEED *= High
+	if currentTitleData == "Sticky" :
+		acceleration *= Low
+		deceleration *= High
+		maxSPEED *= Low
 
 # Call this function to cap the speed to the given speed
 func cap_speed(capped_speed) -> void:
