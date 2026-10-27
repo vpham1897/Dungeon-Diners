@@ -55,3 +55,5 @@ dash={
 
 2d_physics/layer_1="Player Hurtbox"
 2d_physics/layer_2="Enemy Hitbox"
+2d_physics/layer_3="Physics"
+2d_physics/layer_4="WallGuidelines"

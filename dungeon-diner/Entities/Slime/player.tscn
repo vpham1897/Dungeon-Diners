@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://lu7w1wg5ogrw"]
+[gd_scene format=3 uid="uid://lu7w1wg5ogrw"]
 
-[ext_resource type="Script" path="res://Entities/Slime/player.gd" id="1_aiwky"]
+[ext_resource type="Script" uid="uid://cvxcox4e85vv1" path="res://Entities/Slime/player.gd" id="1_aiwky"]
 [ext_resource type="Texture2D" uid="uid://bkv3gvu6fa4rr" path="res://Entities/Slime/Pan_Blue_Circle.png" id="2_mla1c"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6tsad"]
@@ -9,7 +9,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("2_mla1c")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Placeholder Circle",
 "speed": 5.0
 }]
@@ -18,16 +18,18 @@ animations = [{
 radius = 457.143
 height = 914.286
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=906509298]
+collision_layer = 5
+collision_mask = 5
 script = ExtResource("1_aiwky")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1218533271]
 position = Vector2(1.90735e-06, 1.90735e-06)
 scale = Vector2(0.0472674, 0.0472674)
 sprite_frames = SubResource("SpriteFrames_6tsad")
 animation = &"Placeholder Circle"
 frame_progress = 0.736272
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Hitbox" type="CollisionShape2D" parent="." unique_id=93687119]
 scale = Vector2(0.035, 0.035)
 shape = SubResource("CapsuleShape2D_fmsbu")

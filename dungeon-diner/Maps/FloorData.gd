@@ -1,5 +1,12 @@
 extends TileMapLayer
 
+## Direction is represented by an int. This int is meant to be read in binary.
+## 1000 up (8)
+## 0100 down (4)
+## 0010 left (2)
+## 0001 right (1)
+## The range thus is 0 (no direction) to 15 (all directions)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
