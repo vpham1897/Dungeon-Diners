@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://lu7w1wg5ogrw"]
 
-[ext_resource type="Script" uid="uid://cvxcox4e85vv1" path="res://Entities/Slime/player.gd" id="1_aiwky"]
+[ext_resource type="Script" uid="uid://drw4d3uq6wn1x" path="res://Entities/Slime/player.gd" id="1_aiwky"]
 [ext_resource type="Texture2D" uid="uid://bkv3gvu6fa4rr" path="res://Entities/Slime/Pan_Blue_Circle.png" id="2_mla1c"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6tsad"]

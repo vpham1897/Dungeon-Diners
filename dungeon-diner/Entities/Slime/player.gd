@@ -2,43 +2,61 @@
 
 extends CharacterBody2D
 
+## Gets inventory_manager to actually execute using the item.
 signal use_item(source : Node2D)
 
+#region basic movement variables
+## max speed without modifiers
 var BaseMaxSPEED = 800
+## acceleration without modifiers
 var BaseAcceleration = 500
+## deceleration without modifiers
 var BaseDeceleration = 500
+## actual current acceleration
 var acceleration = BaseAcceleration
+## actual current deceleration
 var deceleration = BaseDeceleration
+## actual max speed
 var maxSPEED = BaseMaxSPEED
-var cooldown = 0
+#endregion
 
-## what attack cooldown resets.
-var maxCooldown = 1
+#region dashing variables
+## how strong the dash is
 @export var dash_strength = 2
-var dash_cooldown = 0
-var max_dash_cooldown = 10
+## how long until can dash again
+var dash_cooldown_timer = 0
+## the dash actual cooldown
+var max_dash_cooldown = 2
 ## how long the dash lasts
 var dash_duration: float = .25
 ## time left in current dash
 var dash_timer: float = 0.0
-
+## bool to keep track of if the character is currently dashing
 var is_dashing: bool = false
+## a vector representing the direction relative to the character it's dashing towards
 var dashdirection
+#endregion
 
-var target = Vector2.ZERO
-var item_cooldown = 0
+#region item variables
+## how long until can use item again
+var item_cooldown_timer = 0
+## the item actual cooldown
 var max_item_cooldown = 1
+#endregion
 
-##tileset variables
+#region tileset variables
+## the tilemap to represent data on certain spots such as slowing terrain.
 @export var data_tile_map: TileMapLayer
+## the tilemap for physics collisions
 @export var collision_map: TileMapLayer
-var currentTitleData
+## variable to store the tile the character's currently on
 var tile_data
+## variable to keep track of the state of the tile the character is currently on
+var currentTileCondition
+#endregion
 
 ## Most of the physics occurs here
 func _physics_process(delta):
-
-
 	acceleration = BaseAcceleration
 	deceleration = BaseDeceleration
 	maxSPEED = BaseMaxSPEED
@@ -46,8 +64,10 @@ func _physics_process(delta):
 	terrainModdedSpeeds()
 	cap_speed(maxSPEED)
 
+	#region dashing
 	#start dashing	
-	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown == 0:
+	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer == 0:
+		dash_cooldown_timer = max_dash_cooldown
 		dashdirection = (get_global_mouse_position()-global_position).normalized()
 		print(dashdirection)
 		dash_timer = dash_duration
@@ -62,7 +82,8 @@ func _physics_process(delta):
 		if dash_timer <= 0:
 			is_dashing = false
 			print("done dashing")
-			
+	#endregion
+	
 	## input direction 
 	var direction = Input.get_vector("moveLeft", "moveRight", "moveUp", "moveDown")
 
@@ -81,11 +102,11 @@ func _physics_process(delta):
 		$AnimatedSprite2D.stop()
 
 	# Look only if not mid dashing/item usage. Lower cooldown otherwise 
-	if item_cooldown <= 0 && dash_cooldown <= 0:
+	if item_cooldown_timer <= 0 && dash_cooldown_timer <= 0:
 		look_at(get_global_mouse_position())
 	else:
-		item_cooldown = max(item_cooldown - delta, 0)
-		dash_cooldown = max(dash_cooldown - delta, 0)
+		item_cooldown_timer = max(item_cooldown_timer - delta, 0)
+		dash_cooldown_timer = max(dash_cooldown_timer - delta, 0)
 
 ## This modifies speed in accordance to the terrain underneath
 func terrainModdedSpeeds():
@@ -93,18 +114,18 @@ func terrainModdedSpeeds():
 		tile_data = data_tile_map.get_tile_info_at(global_position)
 		if tile_data != null: #if there is data at that tile
 			#get the string thats in the tileCondition so Sticky ect
-			currentTitleData = tile_data.get_custom_data("TileCondition") 
-			#print("TileCondition: ", currentTitleData)
+			currentTileCondition = tile_data.get_custom_data("TileCondition") 
+			#print("TileCondition: ", currentTileCondition)
 		else:
 			#print("No tile under player, setting to Crisp")
-			currentTitleData = "Crisp"
+			currentTileCondition = "Crisp"
 	else:
 		push_error("TileMap reference is missing!")
 
 	#Balance speed values
 	var High = 2
 	var Low = 0.5
-	match currentTitleData:
+	match currentTileCondition:
 		"Crisp":
 			acceleration *= High
 			deceleration *= High
@@ -117,14 +138,17 @@ func terrainModdedSpeeds():
 			deceleration *= High
 			maxSPEED *= Low
 
-## Resolves move
+## Resolves move as collisisions need to be handled specially
 func move(delta):
+	# check if about to collide.
 	var collision = move_and_collide(velocity * delta, true)
 	if collision:
 		var tile = collision_map.get_tile_info_at(collision.get_position())
 		if tile:
+			## int value that maps to which directions character can vault in relation to this tile.
 			var vaultable = tile.get_custom_data("Direction") 
 			print(vaultable)
+			#region read the vaultable directions and check against current velocity to resolve collision.
 			if is_dashing and vaultable: 
 				var verticalDirection = (velocity.y > 0)
 				var horizontalDirection = (velocity.x > 0)
@@ -147,10 +171,14 @@ func move(delta):
 							if (vaultable%2 == 1 and horizontalDirection):
 								vaulting = true
 								print("vaulting right")
+				# ignore collision if vaulting
 				if vaulting:	
 					position += velocity * delta
 					return
+			#endregion
+		# bounce otherwise with collision
 		velocity = velocity.bounce(collision.get_normal())
+	# normal movement
 	move_and_collide(velocity*delta)
 	return
 
@@ -161,12 +189,14 @@ func cap_speed(capped_speed) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
-		if item_cooldown <= 0:
+		#region Using item code
+		if item_cooldown_timer <= 0:
 			# Call inventory manager's instantiate and give my stuffs
 			print("using item!")
 			InventoryManager.use_item(self)
-			item_cooldown = max_item_cooldown
+			item_cooldown_timer = max_item_cooldown
 		else:
-			print("item on cooldown! ", item_cooldown)
+			print("item on cooldown! ", item_cooldown_timer)
+		#endregion
 
 		
