@@ -1,3 +1,5 @@
+## A global script that is run and manages items
+# TODO attach this to player? I'm not sure why this is global
 extends Node2D
 
 # a selected index of -1 should be "nothing" is selected

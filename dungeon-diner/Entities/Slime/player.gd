@@ -26,9 +26,11 @@ var maxSPEED = BaseMaxSPEED
 ## how long until can dash again
 var dash_cooldown_timer = 0
 ## the dash actual cooldown
-var max_dash_cooldown = 2
-## how long the dash lasts
-var dash_duration: float = .25
+var max_dash_cooldown = 1
+## how long the dash lasts for
+var dash_duration: float = 0.5
+## how long the dash actually accelerates
+var dash_accelerate_duration: float = .25
 ## time left in current dash
 var dash_timer: float = 0.0
 ## bool to keep track of if the character is currently dashing
@@ -76,12 +78,13 @@ func _physics_process(delta):
 	
 	# If dashing, reduce timer but still allow normal input smoothing
 	if is_dashing:
+		if dash_timer > dash_duration - dash_accelerate_duration:
+			velocity = velocity.move_toward(dashdirection * maxSPEED, acceleration * dash_strength * delta)
 		dash_timer -= delta
-		velocity = velocity.move_toward(dashdirection * maxSPEED, acceleration * dash_strength * delta)
-		print("slowing down dashing")
+		#print("accelerating from dashing")
 		if dash_timer <= 0:
 			is_dashing = false
-			print("done dashing")
+			print("done accelerating")
 	#endregion
 	
 	## input direction 
@@ -143,34 +146,36 @@ func move(delta):
 	# check if about to collide.
 	var collision = move_and_collide(velocity * delta, true)
 	if collision:
-		var tile = collision_map.get_tile_info_at(collision.get_position())
+		var target = collision.get_position() - collision.get_normal() * 4
+		#print(collision.get_collider())
+		var tile = collision_map.get_tile_info_at(target)
 		if tile:
-			## int value that maps to which directions character can vault in relation to this tile.
-			var vaultable = tile.get_custom_data("Direction") 
-			print(vaultable)
+			## int value that maps to which directions character can vault in relation to this tile. See FloorData
+			var vaultable = String.num_int64(tile.get_custom_data("Direction"), 2).lpad(4, "0")
+			print("vaultable: ")
+			print(vaultable[0] + vaultable[1] + vaultable [2] + vaultable [3])
 			#region read the vaultable directions and check against current velocity to resolve collision.
 			if is_dashing and vaultable: 
-				var verticalDirection = (velocity.y > 0)
+				var verticalDirection = (velocity.y < 0)
 				var horizontalDirection = (velocity.x > 0)
+				#print("horizontal")
+				#print(horizontalDirection)
 				var vaulting = false
-				if (vaultable%2 == 1 and verticalDirection):
+				if (vaultable[0] == "1" and verticalDirection):
 					vaulting = true
 					print("vaulting up")
 				else:
-					vaultable = (vaultable - (vaultable%2))/2
-					if (vaultable%2 == 1 and not verticalDirection):
+					if (vaultable[1] == "1" and not verticalDirection):
 						vaulting = true
 						print("vaulting down")
 					else:
-						vaultable = (vaultable - (vaultable%2))/2
-						if (vaultable%2 == 1 and not horizontalDirection):
+						if (vaultable[2] == "1" and not horizontalDirection):
 							vaulting = true
 							print("vaulting left")
 						else:
-							vaultable = (vaultable - (vaultable%2))/2
-							if (vaultable%2 == 1 and horizontalDirection):
+							if (vaultable[3] == "1" and horizontalDirection):
 								vaulting = true
-								print("vaulting right")
+								print("vaulting right")	
 				# ignore collision if vaulting
 				if vaulting:	
 					position += velocity * delta
