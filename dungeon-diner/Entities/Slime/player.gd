@@ -71,20 +71,16 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("dash") and not is_dashing and dash_cooldown_timer == 0:
 		dash_cooldown_timer = max_dash_cooldown
 		dashdirection = (get_global_mouse_position()-global_position).normalized()
-		print(dashdirection)
 		dash_timer = dash_duration
 		is_dashing = true
-		print("dashing")
 	
 	# If dashing, reduce timer but still allow normal input smoothing
 	if is_dashing:
 		if dash_timer > dash_duration - dash_accelerate_duration:
 			velocity = velocity.move_toward(dashdirection * maxSPEED, acceleration * dash_strength * delta)
 		dash_timer -= delta
-		#print("accelerating from dashing")
 		if dash_timer <= 0:
 			is_dashing = false
-			print("done accelerating")
 	#endregion
 	
 	## input direction 
@@ -118,9 +114,7 @@ func terrainModdedSpeeds():
 		if tile_data != null: #if there is data at that tile
 			#get the string thats in the tileCondition so Sticky ect
 			currentTileCondition = tile_data.get_custom_data("TileCondition") 
-			#print("TileCondition: ", currentTileCondition)
 		else:
-			#print("No tile under player, setting to Crisp")
 			currentTileCondition = "Crisp"
 	else:
 		push_error("TileMap reference is missing!")
@@ -147,35 +141,30 @@ func move(delta):
 	var collision = move_and_collide(velocity * delta, true)
 	if collision:
 		var target = collision.get_position() - collision.get_normal() * 4
-		#print(collision.get_collider())
 		var tile = collision_map.get_tile_info_at(target)
 		if tile:
-			## int value that maps to which directions character can vault in relation to this tile. See FloorData
+			## binary values that maps to which directions character can vault in relation to this tile. See FloorData
 			var vaultable = String.num_int64(tile.get_custom_data("Direction"), 2).lpad(4, "0")
-			print("vaultable: ")
-			print(vaultable[0] + vaultable[1] + vaultable [2] + vaultable [3])
 			#region read the vaultable directions and check against current velocity to resolve collision.
 			if is_dashing and vaultable: 
 				var verticalDirection = (velocity.y < 0)
 				var horizontalDirection = (velocity.x > 0)
-				#print("horizontal")
-				#print(horizontalDirection)
 				var vaulting = false
+				# upward vaulting
 				if (vaultable[0] == "1" and verticalDirection):
 					vaulting = true
-					print("vaulting up")
 				else:
+					# downward vaulting
 					if (vaultable[1] == "1" and not verticalDirection):
 						vaulting = true
-						print("vaulting down")
 					else:
+						# leftward vaulting
 						if (vaultable[2] == "1" and not horizontalDirection):
 							vaulting = true
-							print("vaulting left")
 						else:
+							# rightward vaulting
 							if (vaultable[3] == "1" and horizontalDirection):
 								vaulting = true
-								print("vaulting right")	
 				# ignore collision if vaulting
 				if vaulting:	
 					position += velocity * delta
@@ -197,7 +186,6 @@ func _input(event: InputEvent) -> void:
 		#region Using item code
 		if item_cooldown_timer <= 0:
 			# Call inventory manager's instantiate and give my stuffs
-			print("using item!")
 			InventoryManager.use_item(self)
 			item_cooldown_timer = max_item_cooldown
 		else:
